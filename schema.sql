@@ -17,6 +17,25 @@ create table if not exists public.registrations (
   female_student_address text not null
 );
 
+create table if not exists public.project_registrations (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  contact_person text not null,
+  contact_phone text not null,
+  contact_email text not null,
+  institution text not null,
+  project_title text not null,
+  project_description text not null,
+  member1_name text not null,
+  member1_class text not null,
+  member2_name text not null,
+  member2_class text not null,
+  member3_name text not null,
+  member3_class text not null,
+  member4_name text,
+  member4_class text
+);
+
 create table if not exists public.registrations_admins (
   user_id uuid primary key references auth.users(id) on delete cascade,
   created_at timestamptz not null default now()
@@ -44,5 +63,18 @@ create policy "Admins can read own admin record"
 on public.registrations_admins for select
 to authenticated
 using (user_id = (select auth.uid()));
+
+alter table public.project_registrations enable row level security;
+
+drop policy if exists "Admins can read project registrations" on public.project_registrations;
+create policy "Admins can read project registrations"
+on public.project_registrations for select
+to authenticated
+using (
+  exists (
+    select 1 from public.registrations_admins a
+    where a.user_id = (select auth.uid())
+  )
+);
 
 -- Do not create public UPDATE or DELETE policies for either table.
