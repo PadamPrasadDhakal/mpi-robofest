@@ -1,0 +1,10 @@
+{
+  "name": "mpi-robofest-2026",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MPI RoboFest 2026 registration website",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.0",
+    "resend": "^4.0.0"
+  }
+}

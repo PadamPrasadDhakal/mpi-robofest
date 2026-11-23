@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MPI RoboFest | Admin Dashboard</title><link rel="stylesheet" href="style.css">
+  <style>
+    body{background:#f1f5fa}.admin-wrap{max-width:1200px;margin:50px auto;padding:0 22px}.admin-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}.admin-top h1{font:700 30px "Space Grotesk";margin:5px 0}.admin-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:25px;box-shadow:0 12px 35px #17365f09}.login-card{max-width:430px;margin:80px auto}.admin-card h2{font:700 20px "Space Grotesk"}.admin-input{width:100%;height:44px;border:1px solid #dce3ed;border-radius:6px;padding:0 12px;margin:7px 0 15px}.admin-button{background:#123b78;color:white;border:0;border-radius:6px;padding:13px 18px;font-weight:700;cursor:pointer}.admin-button:disabled{opacity:.5}.admin-message{font-size:12px;color:#b33c30}.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:18px 0}.toolbar input{height:40px;min-width:220px;border:1px solid #dce3ed;border-radius:6px;padding:0 12px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:900px;font-size:12px}th,td{text-align:left;padding:13px 11px;border-bottom:1px solid #edf0f5;vertical-align:top}th{font-size:10px;letter-spacing:.8px;color:#61718a;background:#f8fafd}td{color:#304663}.pill{display:inline-block;background:#fff2cb;color:#916000;padding:5px 8px;border-radius:20px;font-size:10px;font-weight:700}.empty{padding:35px;text-align:center;color:#7b899d}.admin-actions{display:flex;gap:10px}.logout{background:#fff;border:1px solid #dce3ed;color:#28415f}.admin-stats{display:flex;gap:12px;margin-bottom:18px}.admin-stats div{background:#fff;border:1px solid #e2e8f0;padding:15px 20px;border-radius:8px;min-width:130px}.admin-stats b{display:block;font:700 24px "Space Grotesk";color:#123b78}.admin-stats span{font-size:10px;color:#75839a}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="announcement">MPI ROBOFEST 2026 <span>ADMINISTRATION</span></div>
+  <div class="admin-wrap">
+    <div id="loginView" class="admin-card login-card">
+      <div class="section-kicker">MPI ROBOFEST 2026</div><h2>Admin sign in</h2>
+      <p style="font-size:12px;color:#718098;line-height:1.7">Sign in with the admin account created in Supabase Authentication.</p>
+      <form id="loginForm"><label class="field">Email<input class="admin-input" type="email" id="email" required></label><label class="field">Password<input class="admin-input" type="password" id="password" required></label><button class="admin-button" type="submit">Sign in</button><p id="loginMessage" class="admin-message"></p></form>
+      <p style="font-size:10px;color:#8a97a9">Access is restricted to accounts listed in the registrations_admins table.</p>
+    </div>
+    <div id="dashboardView" hidden>
+      <div class="admin-top"><div><div class="section-kicker">MPI ROBOFEST 2026</div><h1>Registration dashboard</h1><div id="adminEmail" style="font-size:12px;color:#718098"></div></div><div class="admin-actions"><button class="admin-button" id="refreshBtn">Refresh</button><button class="admin-button logout" id="logoutBtn">Sign out</button></div></div>
+      <div class="admin-stats"><div><b id="totalCount">0</b><span>Total registrations</span></div><div><b id="studentCount">0</b><span>Registered students</span></div></div>
+      <div class="admin-card"><div class="toolbar"><input id="searchInput" placeholder="Search school, contact or student…"><button class="admin-button" id="csvBtn">Download CSV ↓</button></div><div class="table-wrap"><table><thead><tr><th>DATE</th><th>SCHOOL & ADDRESS</th><th>CONTACT</th><th>MALE STUDENT</th><th>FEMALE STUDENT</th></tr></thead><tbody id="registrationRows"><tr><td colspan="5" class="empty">Loading registrations…</td></tr></tbody></table></div><p id="dashboardMessage" class="admin-message"></p></div>
+    </div>
+  </div>
+  <script src="config.js"></script><script src="admin.js"></script>
+</body></html>
