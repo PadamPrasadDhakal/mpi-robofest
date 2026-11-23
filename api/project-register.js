@@ -56,34 +56,55 @@ module.exports = async function handler(req, res) {
     if (RESEND_API_KEY && EMAIL_FROM) {
       try {
         const resend = new Resend(RESEND_API_KEY);
-        const members = [
-          `${e(reg.member1_name)} (${e(reg.member1_class)})`,
-          `${e(reg.member2_name)} (${e(reg.member2_class)})`,
-          `${e(reg.member3_name)} (${e(reg.member3_class)})`,
-          reg.member4_name ? `${e(reg.member4_name)} (${e(reg.member4_class)})` : null
-        ].filter(Boolean).map((m, i) => `<li>Member ${i + 1}: ${m}</li>`).join("");
-
         const result = await resend.emails.send({
           from: EMAIL_FROM,
           to: [reg.contact_email],
           subject: "MPI RoboFest 2026 – Project Exhibition Registration Confirmation",
-          html: `
-            <div style="font-family:Arial,sans-serif;max-width:620px;margin:auto;color:#18365f;line-height:1.6">
-              <div style="background:#123b78;color:white;padding:26px;border-radius:10px 10px 0 0">
-                <p style="color:#ffcf35;font-size:12px;font-weight:bold;letter-spacing:2px">MECHINAGAR POLYTECHNIC INSTITUTE</p>
-                <h1 style="margin:5px 0">MPI RoboFest 2026</h1><p style="margin:0">Build. Innovate. Compete.</p>
+          html: `<!DOCTYPE html><html><body style="margin:0;padding:0;background:#f1f5fa;font-family:Arial,sans-serif">
+            <div style="max-width:620px;margin:30px auto;border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.1)">
+              <div style="background:#123b78;padding:32px 36px">
+                <p style="margin:0 0 6px;color:#ffcf35;font-size:11px;font-weight:bold;letter-spacing:2px">MECHINAGAR POLYTECHNIC INSTITUTE</p>
+                <h1 style="margin:0;color:#fff;font-size:26px">MPI RoboFest 2026</h1>
+                <p style="margin:6px 0 0;color:#c6d4e8;font-size:13px">Build. Innovate. Compete.</p>
               </div>
-              <div style="padding:25px;border:1px solid #e5eaf1;border-top:0">
-                <h2>Project Exhibition Registration Received!</h2>
-                <p>Dear ${e(reg.contact_person)},</p>
-                <p>Thank you. Your project <b>${e(reg.project_title)}</b> from <b>${e(reg.institution)}</b> has been successfully registered for the Project Exhibition.</p>
-                <h3>Exhibition details</h3>
-                <p><b>Date:</b> 28–29 Mangsir 2083<br><b>Venue:</b> Mechinagar Polytechnic Institute, Mechinagar, Jhapa</p>
-                <h3>Team members</h3><ul>${members}</ul>
-                <p>For details, visit <a href="https://mpi-robofest.vercel.app">mpi-robofest.vercel.app</a>.</p>
-                <p>Regards,<br><b>MPI RoboFest 2026 Organizing Team</b><br>Mechinagar Polytechnic Institute</p>
+              <div style="background:#fff;padding:32px 36px">
+                <p style="font-size:18px;font-weight:bold;color:#123b78;margin:0 0 16px">🎉 Project registered!</p>
+                <p style="margin:0 0 12px">Dear <b>${e(reg.contact_person)}</b>,</p>
+                <p style="margin:0 0 20px;color:#445870">Thank you for registering your project for the MPI RoboFest 2026 Project Exhibition! We're excited to see what your team has built. Get ready to showcase your innovation to everyone at the event!</p>
+                <div style="background:#f7f9fc;border-left:4px solid #123b78;border-radius:6px;padding:18px 20px;margin-bottom:24px">
+                  <p style="margin:0 0 10px;font-size:11px;font-weight:bold;letter-spacing:1.5px;color:#e99020">📋 YOUR REGISTRATION DETAILS</p>
+                  <table style="width:100%;border-collapse:collapse;font-size:13px">
+                    <tr><td style="padding:6px 0;color:#718098;width:45%">Institution</td><td style="padding:6px 0;font-weight:bold">${e(reg.institution)}</td></tr>
+                    <tr><td style="padding:6px 0;color:#718098">Project title</td><td style="padding:6px 0;font-weight:bold">${e(reg.project_title)}</td></tr>
+                    <tr><td style="padding:6px 0;color:#718098">Description</td><td style="padding:6px 0">${e(reg.project_description)}</td></tr>
+                    <tr><td style="padding:6px 0;color:#718098">Contact person</td><td style="padding:6px 0">${e(reg.contact_person)}</td></tr>
+                    <tr><td style="padding:6px 0;color:#718098">Contact number</td><td style="padding:6px 0">${e(reg.contact_phone)}</td></tr>
+                    <tr><td style="padding:6px 0;color:#718098">Contact email</td><td style="padding:6px 0">${e(reg.contact_email)}</td></tr>
+                  </table>
+                </div>
+                <div style="background:#f7f9fc;border-left:4px solid #ffca2d;border-radius:6px;padding:18px 20px;margin-bottom:24px">
+                  <p style="margin:0 0 10px;font-size:11px;font-weight:bold;letter-spacing:1.5px;color:#e99020">👥 TEAM MEMBERS</p>
+                  <table style="width:100%;border-collapse:collapse;font-size:13px">
+                    ${[{n:reg.member1_name,c:reg.member1_class},{n:reg.member2_name,c:reg.member2_class},{n:reg.member3_name,c:reg.member3_class},{n:reg.member4_name,c:reg.member4_class}].filter(m=>m.n).map((m,i)=>`<tr><td style="padding:6px 0;color:#718098;width:45%">Member ${i+1}</td><td style="padding:6px 0"><b>${e(m.n)}</b> · ${e(m.c)}</td></tr>`).join("")}
+                  </table>
+                </div>
+                <div style="background:#123b78;border-radius:8px;padding:18px 20px;margin-bottom:24px">
+                  <p style="margin:0 0 10px;font-size:11px;font-weight:bold;letter-spacing:1.5px;color:#ffca2d">📅 EVENT SCHEDULE</p>
+                  <table style="width:100%;border-collapse:collapse;font-size:13px;color:#fff">
+                    <tr><td style="padding:5px 0;color:#c6d4e8;width:45%">Workshop</td><td style="padding:5px 0"><b>21–22 Mangsir 2083</b></td></tr>
+                    <tr><td style="padding:5px 0;color:#c6d4e8">Exhibition & Robo Race</td><td style="padding:5px 0"><b>28–29 Mangsir 2083</b></td></tr>
+                    <tr><td style="padding:5px 0;color:#c6d4e8">Venue</td><td style="padding:5px 0">Mechinagar Polytechnic Institute, Jhapa</td></tr>
+                  </table>
+                </div>
+                <p style="color:#445870;margin:0 0 20px">Please make sure all team members are present on the exhibition days. More details about setup time and booth allocation will be shared closer to the event.</p>
+                <p style="color:#445870;margin:0 0 24px">We can't wait to see your project in action. See you at MPI RoboFest 2026! 🤖</p>
+                <div style="border-top:1px solid #e5eaf1;padding-top:20px;font-size:12px;color:#718098">
+                  <p style="margin:0"><b style="color:#123b78">MPI RoboFest 2026 Organizing Team</b><br>Mechinagar Polytechnic Institute, Mechinagar, Jhapa<br>
+                  Technical Partner: <a href="https://pi-innovations.com.np" style="color:#e99020">PI Innovations Pvt. Ltd.</a></p>
+                </div>
               </div>
-            </div>`
+            </div>
+          </body></html>`
         });
         emailSent = !result.error;
         if (result.error) console.error("Resend error:", result.error);

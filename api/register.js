@@ -57,27 +57,51 @@ module.exports = async function handler(req, res) {
           from: EMAIL_FROM,
           to: [registration.contact_email],
           subject: "MPI RoboFest 2026 – Registration Confirmation",
-          html: `
-            <div style="font-family:Arial,sans-serif;max-width:620px;margin:auto;color:#18365f;line-height:1.6">
-              <div style="background:#123b78;color:white;padding:26px;border-radius:10px 10px 0 0">
-                <p style="color:#ffcf35;font-size:12px;font-weight:bold;letter-spacing:2px">MECHINAGAR POLYTECHNIC INSTITUTE</p>
-                <h1 style="margin:5px 0">MPI RoboFest 2026</h1><p style="margin:0">Build. Innovate. Compete.</p>
+          html: `<!DOCTYPE html><html><body style="margin:0;padding:0;background:#f1f5fa;font-family:Arial,sans-serif">
+            <div style="max-width:620px;margin:30px auto;border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.1)">
+              <div style="background:#123b78;padding:32px 36px">
+                <p style="margin:0 0 6px;color:#ffcf35;font-size:11px;font-weight:bold;letter-spacing:2px">MECHINAGAR POLYTECHNIC INSTITUTE</p>
+                <h1 style="margin:0;color:#fff;font-size:26px">MPI RoboFest 2026</h1>
+                <p style="margin:6px 0 0;color:#c6d4e8;font-size:13px">Build. Innovate. Compete.</p>
               </div>
-              <div style="padding:25px;border:1px solid #e5eaf1;border-top:0">
-                <h2>Registration received!</h2>
-                <p>Dear ${escapeHtml(registration.contact_person)},</p>
-                <p>Thank you. The registration for <b>${escapeHtml(registration.school_name)}</b> has been successfully received.</p>
-                <h3>Workshop details</h3>
-                <p><b>Date:</b> 21–22 Mangsir 2083<br><b>Venue:</b> Mechinagar Polytechnic Institute, Mechinagar, Jhapa</p>
-                <h3>Registered participants</h3>
-                <p><b>Male participant:</b> ${escapeHtml(registration.male_student_name)} (${escapeHtml(registration.male_student_class)})<br>
-                <b>Female participant:</b> ${escapeHtml(registration.female_student_name)} (${escapeHtml(registration.female_student_class)})</p>
-                <p>The workshop will cover robotics fundamentals and hands-on construction of a Smart Bluetooth Controlled Robotic Car.</p>
-                <p>Project Exhibition and Robo Race: <b>28–29 Mangsir 2083</b>.</p>
-                <p>For details, visit <a href="https://mpi-robofest.vercel.app">mpi-robofest.vercel.app</a>.</p>
-                <p>Regards,<br><b>MPI RoboFest 2026 Organizing Team</b><br>Mechinagar Polytechnic Institute</p>
+              <div style="background:#fff;padding:32px 36px">
+                <p style="font-size:18px;font-weight:bold;color:#123b78;margin:0 0 16px">🎉 You're registered!</p>
+                <p style="margin:0 0 12px">Dear <b>${escapeHtml(registration.contact_person)}</b>,</p>
+                <p style="margin:0 0 20px;color:#445870">Thank you so much for registering <b>${escapeHtml(registration.school_name)}</b> for the MPI RoboFest 2026 Robotics Workshop! We're thrilled to have your students join us. Get ready for two exciting days of hands-on robotics learning!</p>
+                <div style="background:#f7f9fc;border-left:4px solid #123b78;border-radius:6px;padding:18px 20px;margin-bottom:24px">
+                  <p style="margin:0 0 10px;font-size:11px;font-weight:bold;letter-spacing:1.5px;color:#e99020">📋 YOUR REGISTRATION DETAILS</p>
+                  <table style="width:100%;border-collapse:collapse;font-size:13px">
+                    <tr><td style="padding:6px 0;color:#718098;width:45%">School</td><td style="padding:6px 0;font-weight:bold">${escapeHtml(registration.school_name)}</td></tr>
+                    <tr><td style="padding:6px 0;color:#718098">Address</td><td style="padding:6px 0">${escapeHtml(registration.school_address)}</td></tr>
+                    <tr><td style="padding:6px 0;color:#718098">Contact person</td><td style="padding:6px 0">${escapeHtml(registration.contact_person)}</td></tr>
+                    <tr><td style="padding:6px 0;color:#718098">Contact number</td><td style="padding:6px 0">${escapeHtml(registration.contact_phone)}</td></tr>
+                    <tr><td style="padding:6px 0;color:#718098">Contact email</td><td style="padding:6px 0">${escapeHtml(registration.contact_email)}</td></tr>
+                  </table>
+                </div>
+                <div style="background:#f7f9fc;border-left:4px solid #ffca2d;border-radius:6px;padding:18px 20px;margin-bottom:24px">
+                  <p style="margin:0 0 10px;font-size:11px;font-weight:bold;letter-spacing:1.5px;color:#e99020">👨‍🎓 REGISTERED STUDENTS</p>
+                  <table style="width:100%;border-collapse:collapse;font-size:13px">
+                    <tr><td style="padding:6px 0;color:#718098;width:45%">Male participant</td><td style="padding:6px 0"><b>${escapeHtml(registration.male_student_name)}</b> · ${escapeHtml(registration.male_student_class)}<br><span style="color:#718098;font-size:12px">${escapeHtml(registration.male_student_address)}</span></td></tr>
+                    <tr><td style="padding:6px 0;color:#718098">Female participant</td><td style="padding:6px 0"><b>${escapeHtml(registration.female_student_name)}</b> · ${escapeHtml(registration.female_student_class)}<br><span style="color:#718098;font-size:12px">${escapeHtml(registration.female_student_address)}</span></td></tr>
+                  </table>
+                </div>
+                <div style="background:#123b78;border-radius:8px;padding:18px 20px;margin-bottom:24px">
+                  <p style="margin:0 0 10px;font-size:11px;font-weight:bold;letter-spacing:1.5px;color:#ffca2d">📅 EVENT SCHEDULE</p>
+                  <table style="width:100%;border-collapse:collapse;font-size:13px;color:#fff">
+                    <tr><td style="padding:5px 0;color:#c6d4e8;width:45%">Workshop</td><td style="padding:5px 0"><b>21–22 Mangsir 2083</b></td></tr>
+                    <tr><td style="padding:5px 0;color:#c6d4e8">Exhibition & Robo Race</td><td style="padding:5px 0"><b>28–29 Mangsir 2083</b></td></tr>
+                    <tr><td style="padding:5px 0;color:#c6d4e8">Venue</td><td style="padding:5px 0">Mechinagar Polytechnic Institute, Jhapa</td></tr>
+                  </table>
+                </div>
+                <p style="color:#445870;margin:0 0 20px">The workshop will cover robotics fundamentals and hands-on construction of a <b>Smart Bluetooth Controlled Robotic Car</b>. Please make sure your students arrive on time on Day 1.</p>
+                <p style="color:#445870;margin:0 0 24px">We look forward to seeing you and your students at MPI RoboFest 2026. See you there! 🤖</p>
+                <div style="border-top:1px solid #e5eaf1;padding-top:20px;font-size:12px;color:#718098">
+                  <p style="margin:0"><b style="color:#123b78">MPI RoboFest 2026 Organizing Team</b><br>Mechinagar Polytechnic Institute, Mechinagar, Jhapa<br>
+                  Technical Partner: <a href="https://pi-innovations.com.np" style="color:#e99020">PI Innovations Pvt. Ltd.</a></p>
+                </div>
               </div>
-            </div>`
+            </div>
+          </body></html>`
         });
         emailSent = !result.error;
         if (result.error) console.error("Resend error:", result.error);
